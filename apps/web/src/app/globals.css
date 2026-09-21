@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  /* warm cream + forest greens — same palette as the original Verdex app */
+  --bg: oklch(0.972 0.012 95);
+  --bg-2: oklch(0.945 0.018 95);
+  --paper: oklch(0.985 0.008 95);
+  --ink: oklch(0.22 0.025 155);
+  --ink-2: oklch(0.38 0.025 155);
+  --ink-3: oklch(0.55 0.018 155);
+  --rule: oklch(0.86 0.018 95);
+
+  --green: oklch(0.42 0.085 152);
+  --green-deep: oklch(0.30 0.07 152);
+  --green-bright: oklch(0.62 0.13 148);
+  --green-soft: oklch(0.92 0.04 145);
+
+  --amber: oklch(0.74 0.135 65);
+  --amber-deep: oklch(0.58 0.13 55);
+  --amber-soft: oklch(0.94 0.045 80);
+
+  --background: var(--bg);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-verdex-bg: var(--bg);
+  --color-verdex-bg-2: var(--bg-2);
+  --color-verdex-paper: var(--paper);
+  --color-verdex-ink: var(--ink);
+  --color-verdex-ink-2: var(--ink-2);
+  --color-verdex-ink-3: var(--ink-3);
+  --color-verdex-rule: var(--rule);
+  --color-verdex-green: var(--green);
+  --color-verdex-green-deep: var(--green-deep);
+  --color-verdex-green-bright: var(--green-bright);
+  --color-verdex-green-soft: var(--green-soft);
+  --color-verdex-amber: var(--amber);
+  --color-verdex-amber-deep: var(--amber-deep);
+  --color-verdex-amber-soft: var(--amber-soft);
+
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-instrument-serif);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* --- Shared motion primitives ---------------------------------------- */
+/* One set of timing values so every page/component animates in sync
+   instead of picking its own duration/easing each time. */
+:root {
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 320ms;
+}
+
+@keyframes verdex-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes verdex-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: verdex-fade-in-up var(--duration-base) var(--ease-standard) both;
+}
+
+/* Stagger helper for lists of cards — apply alongside .animate-fade-in-up. */
+.stagger-1 {
+  animation-delay: 60ms;
+}
+.stagger-2 {
+  animation-delay: 120ms;
+}
+.stagger-3 {
+  animation-delay: 180ms;
+}
+
+.skeleton {
+  background-image: linear-gradient(
+    100deg,
+    var(--bg-2) 40%,
+    var(--paper) 50%,
+    var(--bg-2) 60%
+  );
+  background-size: 200% 100%;
+  animation: verdex-shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .skeleton {
+    animation: none !important;
+  }
+}
